@@ -48,6 +48,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "antlr", "antlr", "{59743F39
 		antlr\Test.java = antlr\Test.java
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication2", "ConsoleApplication2\ConsoleApplication2.csproj", "{387FCFDE-7590-46EC-B14E-2671E9F84AB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{B3DBE2B1-9CD8-4F04-A7C5-A3DCB6A414A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3DBE2B1-9CD8-4F04-A7C5-A3DCB6A414A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3DBE2B1-9CD8-4F04-A7C5-A3DCB6A414A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{387FCFDE-7590-46EC-B14E-2671E9F84AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{387FCFDE-7590-46EC-B14E-2671E9F84AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{387FCFDE-7590-46EC-B14E-2671E9F84AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{387FCFDE-7590-46EC-B14E-2671E9F84AB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

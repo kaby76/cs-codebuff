@@ -6,3 +6,5 @@ packages/
 org.antlr.codebuff.sln~
 ConsoleApplication1/bin/
 ConsoleApplication1/obj/
+ConsoleApplication2/obj/
+ConsoleApplication2/bin/
