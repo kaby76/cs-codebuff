@@ -18,6 +18,6 @@
     </dependencies>    
   </metadata>
   <files>
-    <file src="org.antlr.codebuff\bin\Release\org.antlr.codebuff.dll" target="lib\netstandard2.0" />
+    <file src="org.antlr.codebuff\bin\Release\netstandard2.0\org.antlr.codebuff.dll" target="lib\netstandard2.0" />
   </files>
 </package>
