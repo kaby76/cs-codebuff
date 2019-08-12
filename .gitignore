@@ -8,3 +8,7 @@ ConsoleApplication1/bin/
 ConsoleApplication1/obj/
 ConsoleApplication2/obj/
 ConsoleApplication2/bin/
+.vs/
+*.nupkg
+*.exe
+MigrationBackup/

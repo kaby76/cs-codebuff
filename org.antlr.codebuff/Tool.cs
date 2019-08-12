@@ -350,9 +350,9 @@ namespace org.antlr.codebuff
 			{
 			}
 
-		    public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg,
-		        RecognitionException e)
-		    {
+            public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine,
+                string msg, RecognitionException e)
+            {
                 Console.Error.WriteLine(recognizer.InputStream.SourceName + " line " + line + ":" + charPositionInLine + " " + msg);
             }
         }
