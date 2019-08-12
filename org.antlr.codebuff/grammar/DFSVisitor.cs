@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Antlr4.Runtime.Tree;
 using Antlr4.Runtime;
 
-namespace AntlrVSIX.Grammar
+namespace org.antlr.codebuff
 {
     internal class DFSVisitor
     {

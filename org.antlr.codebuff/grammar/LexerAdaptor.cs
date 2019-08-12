@@ -2,15 +2,19 @@
 using System.Linq;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using org.antlr.codebuff.grammar;
 
-namespace AntlrVSIX.Grammar
+namespace org.antlr.codebuff
 {
     public abstract class LexerAdaptor : Lexer
     {
         private ICharStream _input;
 
-        public LexerAdaptor(ICharStream input)
-            : base(input)
+        public LexerAdaptor(
+            Antlr4.Runtime.ICharStream input,
+            System.IO.TextWriter output,
+            System.IO.TextWriter errorOutput)
+            : base(input, output, errorOutput)
         {
             _input = input;
         }

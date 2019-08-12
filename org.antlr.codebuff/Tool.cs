@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using org.antlr.codebuff.grammar;
 using org.antlr.codebuff.misc;
 
 namespace org.antlr.codebuff

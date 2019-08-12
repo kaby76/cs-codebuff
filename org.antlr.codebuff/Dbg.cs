@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using org.antlr.codebuff.grammar;
 using org.antlr.codebuff.misc;
 
 namespace org.antlr.codebuff
