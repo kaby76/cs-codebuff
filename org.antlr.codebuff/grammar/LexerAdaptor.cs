@@ -47,24 +47,56 @@ namespace org.antlr.codebuff
         {
             if (inLexerRule())
             {
-                this.PushMode(ANTLRv4Lexer.LexerCharSet);
+                this.PushMode(ANTLRv4Lexer.MLexerCharSet);
                 this.More();
             }
             else
             {
-                this.PushMode(ANTLRv4Lexer.ArgAction);
+                this.PushMode(ANTLRv4Lexer.MArgument);
+            }
+        }
+
+        protected void handleEndArgument()
+        {
+            this.PopMode();
+            if (ModeStack.Any())
+            {
+                this.Type = ANTLRv4Lexer.ARGUMENT_CONTENT;
+            }
+        }
+
+        protected void handleEndAction()
+        {
+            this.PopMode();
+            if (ModeStack.Any())
+            {
+                this.Type = ANTLRv4Lexer.ACTION_CONTENT;
             }
         }
 
         public override IToken Emit()
         {
-            if (this.Type == ANTLRv4Lexer.TOKEN_REF || this.Type == ANTLRv4Lexer.RULE_REF)
+            if (this.Type == ANTLRv4Lexer.ID)
             {
-                if (this.getCurrentRuleType() == TokenConstants.InvalidType)
-                    _currentRuleType = this.Type;
+                String firstChar = this._input.GetText(
+                    Interval.Of(this.TokenStartCharIndex, this.TokenStartCharIndex));
+
+                if (Char.IsUpper(firstChar.ElementAt(0)))
+                {
+                    this.Type = ANTLRv4Lexer.TOKEN_REF;
+                }
+                else
+            {
+                    this.Type = ANTLRv4Lexer.RULE_REF;
+                }
+
+                if (_currentRuleType == TokenConstants.InvalidType)
+                { // if outside of rule def
+                    _currentRuleType = this.Type; // set to inside lexer or parser rule
+                }
             }
             else if (this.Type == ANTLRv4Lexer.SEMI)
-            {
+            { // exit rule def
                 _currentRuleType = TokenConstants.InvalidType;
             }
 
