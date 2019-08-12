@@ -1,1 +1,1 @@
-nuget pack cs-codebuff.nuspec -Version 1.0-alpha -Properties 'Configuration=Release;Platform=x86;'
+nuget pack cs-codebuff.nuspec -Version 2.0 -Properties 'Configuration=Release;Platform=x86;'

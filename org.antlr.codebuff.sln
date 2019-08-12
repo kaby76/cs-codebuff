@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "org.antlr.codebuff", "org.antlr.codebuff\org.antlr.codebuff.csproj", "{9B9DC2B0-8117-4F7F-A7D7-7A44F129627B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "org.antlr.codebuff", "org.antlr.codebuff\org.antlr.codebuff.csproj", "{9B9DC2B0-8117-4F7F-A7D7-7A44F129627B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{098B2CD3-FB7D-44A5-AB1B-63FBCDE81A39}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,18 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "corpus-for-codebuff", "corp
 		corpus-for-codebuff\YangJavaParser.g = corpus-for-codebuff\YangJavaParser.g
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "antlr", "antlr", "{59743F39-CA4F-4031-B837-37A927CEE05F}"
-	ProjectSection(SolutionItems) = preProject
-		antlr\AntlrLexer.g4 = antlr\AntlrLexer.g4
-		antlr\AntlrParser.g4 = antlr\AntlrParser.g4
-		antlr\ANTLRv4Lexer.g4 = antlr\ANTLRv4Lexer.g4
-		antlr\ANTLRv4Parser.g4 = antlr\ANTLRv4Parser.g4
-		antlr\d1.sh = antlr\d1.sh
-		antlr\d2.sh = antlr\d2.sh
-		antlr\LexerAdaptor.java = antlr\LexerAdaptor.java
-		antlr\Test.java = antlr\Test.java
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication2", "ConsoleApplication2\ConsoleApplication2.csproj", "{387FCFDE-7590-46EC-B14E-2671E9F84AB0}"
 EndProject
 Global
@@ -71,5 +59,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D376E2A-D48E-4F80-8A09-D528D85CB08D}
 	EndGlobalSection
 EndGlobal
