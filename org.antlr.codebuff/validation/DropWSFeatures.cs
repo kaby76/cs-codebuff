@@ -46,7 +46,7 @@ namespace org.antlr.codebuff.validation
 
 			foreach (LangDescriptor language in languages)
 			{
-				Console.WriteLine("###### " + language.name);
+                Log.WriteLine("###### " + language.name);
 				Dictionary<string, float> featureToErrors = new Dictionary<string, float>();
 
 				FeatureMetaData[] injectWSFeatures = deepCopy(whichFeatures);
@@ -58,7 +58,7 @@ namespace org.antlr.codebuff.validation
 				float quart = errors[(int)(0.27 * n)];
 				float median = errors[n / 2];
 				float quart3 = errors[(int)(0.75 * n)];
-				Console.WriteLine("curated error median " + median);
+                Log.WriteLine("curated error median " + median);
 				featureToErrors["curated"] = median;
 
 				// do it again to get answer with all features if they want
@@ -68,7 +68,7 @@ namespace org.antlr.codebuff.validation
                     errors = errors.OrderBy(e => e).ToList();
                     n = errors.Count;
 					median = errors[n / 2];
-					Console.WriteLine("all-in error median " + median);
+                    Log.WriteLine("all-in error median " + median);
 					featureToErrors["all-in"] = median;
 				}
 
@@ -80,7 +80,7 @@ namespace org.antlr.codebuff.validation
 					}
 					string name = Utils.join(feature.abbrevHeaderRows, " ");
 					labels.Add(name.Trim());
-					Console.WriteLine("wack " + name);
+                    Log.WriteLine("wack " + name);
 					double saveCost = feature.mismatchCost;
 					feature.mismatchCost = 0; // wack this feature
 
@@ -89,12 +89,12 @@ namespace org.antlr.codebuff.validation
                     n = errors.Count;
 					median = errors[n / 2];
 					featureToErrors[name] = median;
-					Console.WriteLine("median error rates " + median);
+                    Log.WriteLine("median error rates " + median);
 
 					// reset feature
 					feature.mismatchCost = saveCost;
 				}
-				Console.WriteLine(featureToErrors);
+                Log.WriteLine(featureToErrors);
 				langToFeatureMedians[language.name] = featureToErrors;
 			}
 
@@ -122,7 +122,7 @@ namespace org.antlr.codebuff.validation
 				fileName = "python/src/drop_one_ws_feature_from_all.py";
 			}
 			org.antlr.codebuff.misc.Utils.writeFile(fileName, code);
-			Console.WriteLine("wrote python code to " + fileName);
+            Log.WriteLine("wrote python code to " + fileName);
 		}
 
 		private static IList<float> getWSErrorRates(LangDescriptor language, FeatureMetaData[] injectWSFeatures, FeatureMetaData[] alignmentFeatures)

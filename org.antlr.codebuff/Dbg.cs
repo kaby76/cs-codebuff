@@ -1,115 +1,35 @@
-﻿using System;
+﻿using Antlr4.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-using org.antlr.codebuff.grammar;
-using org.antlr.codebuff.misc;
 
 namespace org.antlr.codebuff
 {
 
-	//using GUIController = org.antlr.codebuff.gui.GUIController;
-	using CodeBuffTokenStream = org.antlr.codebuff.misc.CodeBuffTokenStream;
-	using LangDescriptor = org.antlr.codebuff.misc.LangDescriptor;
-	using ClassificationAnalysis = org.antlr.codebuff.validation.ClassificationAnalysis;
-	using LeaveOneOutValidator = org.antlr.codebuff.validation.LeaveOneOutValidator;
-	using TokenPositionAnalysis = org.antlr.codebuff.validation.TokenPositionAnalysis;
-	using ANTLRFileStream = Antlr4.Runtime.AntlrFileStream;
-	using CommonToken = Antlr4.Runtime.CommonToken;
-	using CommonTokenStream = Antlr4.Runtime.CommonTokenStream;
-	using Lexer = Antlr4.Runtime.Lexer;
-	using Token = Antlr4.Runtime.IToken;
-	//using Pair = org.antlr.v4.runtime.misc.Pair;
-	//using Triple = org.antlr.v4.runtime.misc.Triple;
+    using ANTLRFileStream = Antlr4.Runtime.AntlrFileStream;
+    //using GUIController = org.antlr.codebuff.gui.GUIController;
+    using CodeBuffTokenStream = org.antlr.codebuff.misc.CodeBuffTokenStream;
+    using CommonToken = Antlr4.Runtime.CommonToken;
+    using CommonTokenStream = Antlr4.Runtime.CommonTokenStream;
+    using Token = Antlr4.Runtime.IToken;
+    //using Pair = org.antlr.v4.runtime.misc.Pair;
+    //using Triple = org.antlr.v4.runtime.misc.Triple;
 
-	/// <summary>
-	/// Grammar must have WS/comments on hidden channel
-	/// 
-	/// Testing:
-	/// 
-	/// Dbg  -antlr     corpus/antlr4/training      grammars/org/antlr/codebuff/tsql.g4
-	/// Dbg  -antlr     corpus/antlr4/training      corpus/antlr4/training/MASM.g4
-	/// Dbg  -quorum     corpus/quorum/training      corpus/quorum/training/Containers/List.quorum
-	/// Dbg  -sqlite    corpus/sqlclean/training      corpus/sqlclean/training/dmart_bits.sql
-	/// Dbg  -tsql      corpus/sqlclean/training        corpus/sqlclean/training/dmart_bits_PSQLRPT24.sql
-	/// Dbg  -java_st      corpus/java/training/stringtemplate4/org/stringtemplate/v4/StringRenderer.java
-	/// Dbg  -java_guava   corpus/java/training/guava/base/Absent.java
-	/// </summary>
-	public class Dbg
+    /// <summary>
+    /// Grammar must have WS/comments on hidden channel
+    /// 
+    /// Testing:
+    /// 
+    /// Dbg  -antlr     corpus/antlr4/training      grammars/org/antlr/codebuff/tsql.g4
+    /// Dbg  -antlr     corpus/antlr4/training      corpus/antlr4/training/MASM.g4
+    /// Dbg  -quorum     corpus/quorum/training      corpus/quorum/training/Containers/List.quorum
+    /// Dbg  -sqlite    corpus/sqlclean/training      corpus/sqlclean/training/dmart_bits.sql
+    /// Dbg  -tsql      corpus/sqlclean/training        corpus/sqlclean/training/dmart_bits_PSQLRPT24.sql
+    /// Dbg  -java_st      corpus/java/training/stringtemplate4/org/stringtemplate/v4/StringRenderer.java
+    /// Dbg  -java_guava   corpus/java/training/guava/base/Absent.java
+    /// </summary>
+    public class Dbg
 	{
-
-
-		public static void Main(string[] args)
-		{
-			if (args.Length < 2)
-			{
-				Console.Error.WriteLine("Dbg [-leave-one-out] [-java|-java8|-antlr|-sqlite|-tsql] test-file");
-			}
-
-			int arg = 0;
-			bool leaveOneOut = true;
-			bool collectAnalysis = true;
-			string language = args[arg++];
-			language = language.Substring(1);
-			string testFilename = args[arg];
-			string output = "???";
-			InputDocument testDoc = null;
-			IList<TokenPositionAnalysis> analysisPerToken = null;
-            org.antlr.codebuff.misc.Pair<string, IList<TokenPositionAnalysis>> results;
-			LangDescriptor lang = null;
-			System.DateTime start, stop;
-			for (int i = 0; i < Tool.languages.Length; i++)
-			{
-				if (Tool.languages[i].name.Equals(language))
-				{
-					lang = Tool.languages[i];
-					break;
-				}
-			}
-			if (lang != null)
-			{
-				start  = System.DateTime.Now;
-				LeaveOneOutValidator validator = new LeaveOneOutValidator(lang.corpusDir, lang);
-				Triple<Formatter, float, float> val = validator.validateOneDocument(testFilename, null, collectAnalysis);
-				testDoc = Tool.parse(testFilename, lang);
-				stop = System.DateTime.Now;
-				Formatter formatter = val.a;
-				output = formatter.Output;
-				Console.WriteLine("output len = " + output.Length);
-				float editDistance = normalizedLevenshteinDistance(testDoc.content, output);
-				Console.WriteLine("normalized Levenshtein distance: " + editDistance);
-				analysisPerToken = formatter.AnalysisPerToken;
-
-			    Regex rex = new Regex("^\\s+$");
-				CommonTokenStream original_tokens = Tool.tokenize(testDoc.content, lang.lexerClass);
-				IList<Token> wsTokens = BuffUtils.filter(original_tokens.GetTokens(), t => rex.IsMatch(t.Text));
-				string originalWS = tokenText(wsTokens);
-				Console.WriteLine("origin ws tokens len: " + originalWS.Length);
-				CommonTokenStream formatted_tokens = Tool.tokenize(output, lang.lexerClass);
-				wsTokens = BuffUtils.filter(formatted_tokens.GetTokens(), t => rex.IsMatch(t.Text));
-				string formattedWS = tokenText(wsTokens);
-				Console.WriteLine("formatted ws tokens len: " + formattedWS.Length);
-				editDistance = levenshteinDistance(originalWS, formattedWS);
-				editDistance /= Math.Max(testDoc.content.Length, output.Length);
-				Console.WriteLine("Levenshtein distance of ws normalized to output len: " + editDistance);
-
-				ClassificationAnalysis analysis = new ClassificationAnalysis(testDoc, analysisPerToken);
-				Console.WriteLine(analysis);
-			}
-
-			if (lang != null)
-			{
-    //            GUIController controller;
-    //            controller = new GUIController(analysisPerToken, testDoc, output, lang.lexerClass);
-				//controller.show();
-	//			System.out.println(output);
-				//Console.Write("formatting time {0:D}s\n", (stop - start) / 1000000);
-				Console.Write("classify calls {0:D}, hits {1:D} rate {2:F}\n", kNNClassifier.nClassifyCalls, kNNClassifier.nClassifyCacheHits, kNNClassifier.nClassifyCacheHits / (float) kNNClassifier.nClassifyCalls);
-				Console.Write("kNN calls {0:D}, hits {1:D} rate {2:F}\n", kNNClassifier.nNNCalls, kNNClassifier.nNNCacheHits, kNNClassifier.nNNCacheHits / (float) kNNClassifier.nNNCalls);
-			}
-		}
 
 		/// <summary>
 		/// from https://en.wikipedia.org/wiki/Levenshtein_distance
@@ -317,21 +237,16 @@ namespace org.antlr.codebuff
 
 		public static void printOriginalFilePiece(InputDocument doc, CommonToken originalCurToken)
 		{
-			Console.WriteLine(doc.getLine(originalCurToken.Line-1));
-			Console.WriteLine(doc.getLine(originalCurToken.Line));
-			Console.Write(Tool.spaces(originalCurToken.Column));
-			Console.WriteLine("^");
+            Log.WriteLine(doc.getLine(originalCurToken.Line-1));
+            Log.WriteLine(doc.getLine(originalCurToken.Line));
+            Log.Write(Tool.spaces(originalCurToken.Column));
+            Log.WriteLine("^");
 		}
 
 		public class Foo
 		{
 			public static void Main(string[] args)
 			{
-				ANTLRv4Lexer lexer = new ANTLRv4Lexer(new ANTLRFileStream("grammars/org/antlr/codebuff/ANTLRv4Lexer.g4"));
-				CommonTokenStream tokens = new CodeBuffTokenStream(lexer);
-				ANTLRv4Parser parser = new ANTLRv4Parser(tokens);
-				ANTLRv4Parser.GrammarSpecContext tree = parser.grammarSpec();
-				Console.WriteLine(tree.ToStringTree(parser));
 			}
 		}
 	}

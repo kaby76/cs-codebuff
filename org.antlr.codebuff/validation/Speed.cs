@@ -39,7 +39,7 @@ namespace org.antlr.codebuff.validation
 			}
 			if (language == null)
 			{
-				Console.Error.WriteLine("Language " + langname + " unknown");
+                Log.WriteLine("Language " + langname + " unknown");
 				return;
 			}
 
@@ -49,7 +49,7 @@ namespace org.antlr.codebuff.validation
 			IList<InputDocument> documents = Tool.load(allFiles, language);
             DateTime load_stop = System.DateTime.Now;
             DateTime load_time = (load_stop - load_start) / 1000000;
-			Console.Write("Loaded {0:D} files in {1:D}ms\n", documents.Count, load_time);
+            Log.Write("Loaded {0:D} files in {1:D}ms\n", documents.Count, load_time);
 
 			string path = System.IO.Path.GetFullPath(testFilename);
 			IList<InputDocument> others = BuffUtils.filter(documents, d => !d.fileName.Equals(path));
@@ -57,7 +57,7 @@ namespace org.antlr.codebuff.validation
 			Debug.Assert(others.Count == documents.Count - 1);
 			if (excluded.Count == 0)
 			{
-				Console.Error.WriteLine("Doc not in corpus: " + path);
+                Log.WriteLine("Doc not in corpus: " + path);
 				return;
 			}
 			InputDocument testDoc = excluded[0];
@@ -73,8 +73,8 @@ namespace org.antlr.codebuff.validation
 			// drop first four
 			training = training.subList(5,training.Count);
 			formatting = formatting.subList(5,formatting.Count);
-			Console.Write("median of [5:{0:D}] training {1:D}ms\n", TRIALS - 1, BuffUtils.median(training));
-			Console.Write("median of [5:{0:D}] formatting {1:D}ms\n", TRIALS - 1, BuffUtils.median(formatting));
+            Log.Write("median of [5:{0:D}] training {1:D}ms\n", TRIALS - 1, BuffUtils.median(training));
+            Log.Write("median of [5:{0:D}] formatting {1:D}ms\n", TRIALS - 1, BuffUtils.median(formatting));
 		}
 
 		public static org.antlr.codebuff.misc.Pair<int, int> test(LangDescriptor language, IList<InputDocument> others, InputDocument testDoc)
@@ -92,7 +92,7 @@ namespace org.antlr.codebuff.validation
 			var train_time = (train_stop - train_start) / 1000000;
 			var format_time = (format_stop - format_start) / 1000000;
 
-			Console.Write("{0} training of {1} = {2:D}ms formatting = {3:D}ms\n", language.name, testDoc.fileName, train_time, format_time);
+            Log.Write("{0} training of {1} = {2:D}ms formatting = {3:D}ms\n", language.name, testDoc.fileName, train_time, format_time);
 
 			return new org.antlr.codebuff.misc.Pair<int, int>((int)train_time, (int)format_time);
 		}

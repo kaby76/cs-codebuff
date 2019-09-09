@@ -147,9 +147,9 @@ namespace org.antlr.codebuff
 			}
 			if (dumpVotes && kNN.Length > 0)
 			{
-				Console.Write(Trainer.featureNameHeader(FEATURES));
+                Log.Write(Trainer.featureNameHeader(FEATURES));
 				InputDocument firstDoc = corpus.documentsPerExemplar[kNN[0].corpusVectorIndex]; // pick any neighbor to get parser
-				Console.WriteLine(Trainer._toString(FEATURES, firstDoc, unknown) + "->" + votes);
+                Log.WriteLine(Trainer._toString(FEATURES, firstDoc, unknown) + "->" + votes);
 			    int size = Math.Min(k, kNN.Length);
                 kNN = kNN.Take(Math.Min(k, kNN.Length)).ToArray();
 				StringBuilder buf = new StringBuilder();
@@ -158,7 +158,7 @@ namespace org.antlr.codebuff
 					buf.Append(n.ToString(FEATURES, Y));
 					buf.Append("\n");
 				}
-				Console.WriteLine(buf);
+                Log.WriteLine(buf.ToString());
 			}
 			return votes;
 		}

@@ -601,7 +601,7 @@ namespace org.antlr.codebuff
 			TerminalNode node = tokenToNodeMap[tokens.Get(i)];
 			if (node == null)
 			{
-				Console.Error.WriteLine("### No node associated with token " + tokens.Get(i));
+                Log.WriteLine("### No node associated with token " + tokens.Get(i));
 				return null;
 			}
 
@@ -646,7 +646,7 @@ namespace org.antlr.codebuff
 			TerminalNode node = tokenToNodeMap[tokens.Get(i)];
 			if (node == null)
 			{
-				Console.Error.WriteLine("### No node associated with token " + tokens.Get(i));
+                Log.WriteLine("### No node associated with token " + tokens.Get(i));
 				return features;
 			}
 			Token curToken = node.Symbol;
@@ -815,7 +815,7 @@ namespace org.antlr.codebuff
 						TerminalNode matchingLeftNode = nodesToLeftOfCurrentToken[nodesToLeftOfCurrentToken.Count - 1];
 						if (matchingLeftNode == null)
 						{
-							Console.Error.WriteLine("can't find matching node for " + node.Symbol);
+                            Log.WriteLine("can't find matching node for " + node.Symbol);
 						}
 						return matchingLeftNode;
 					}
@@ -964,7 +964,7 @@ namespace org.antlr.codebuff
 	            }
 	            else
 	            {
-	                Console.Error.WriteLine("NO STRING FOR FEATURE TYPE: " + FEATURES[i].type);
+                    Log.WriteLine("NO STRING FOR FEATURE TYPE: " + FEATURES[i].type);
 	                break;
 	            }
 	        }
@@ -1005,7 +1005,7 @@ namespace org.antlr.codebuff
 			    }
 			    else
 			    {
-			        Console.Error.WriteLine("NO STRING FOR FEATURE TYPE: " + FEATURES[i].type);
+                    Log.WriteLine("NO STRING FOR FEATURE TYPE: " + FEATURES[i].type);
 			    }
 			}
 			return buf.ToString();

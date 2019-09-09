@@ -25,12 +25,12 @@ namespace org.antlr.codebuff.validation
 			foreach (LangDescriptor language in languages)
 			{
 				IList<float?> errorRates = checkStability(language);
-				Console.WriteLine(language.name + " " + errorRates);
+                Log.WriteLine(language.name + " " + errorRates);
 				results[language.name] = errorRates;
 			}
 			foreach (string name in results.Keys)
 			{
-				Console.WriteLine(name + " = " + results[name]);
+                Log.WriteLine(name + " = " + results[name]);
 			}
 
 			string python = "#\n" + "# AUTO-GENERATED FILE. DO NOT EDIT\n" + "# CodeBuff <version> '<date>'\n" + "#\n" + "import numpy as np\n" + "import matplotlib.pyplot as plt\n\n" + "import matplotlib\n" + "fig = plt.figure()\n" + "ax = plt.subplot(111)\n" + "N = <N>\n" + "sizes = range(0,N)\n" + "<results:{r |\n" + "<r> = [<results.(r); separator={,}>]\n" + "ax.plot(sizes, <r>, label=\"<r>\", marker='o')\n" + "}>\n" + "ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.5)\n" + "xa = ax.get_xaxis()\n" + "xa.set_major_locator(matplotlib.ticker.MaxNLocator(integer=True))\n" + "ax.set_xlabel(\"Formatting Stage; stage 0 is first formatting pass\")\n" + "ax.set_ylabel(\"Median Leave-one-out Validation Error Rate\")\n" + "ax.set_title(\"<N>-Stage Formatting Stability\\nStage $n$ is formatted output of stage $n-1$\")\n" + "plt.legend()\n" + "plt.tight_layout()\n" + "fig.savefig('images/stability.pdf', format='pdf')\n" + "plt.show()\n";
@@ -41,7 +41,7 @@ namespace org.antlr.codebuff.validation
 			pythonST.add("N", STAGES + 1);
 			string fileName = "python/src/stability.py";
             org.antlr.codebuff.misc.Utils.writeFile(fileName, pythonST.render());
-			Console.WriteLine("wrote python code to " + fileName);
+            Log.WriteLine("wrote python code to " + fileName);
 		}
 
 		public static IList<float?> checkStability(LangDescriptor language)

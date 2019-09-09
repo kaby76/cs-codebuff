@@ -95,9 +95,9 @@ namespace org.antlr.codebuff.validation
 					java_guava_median = median;
 				}
 			}
-			Console.WriteLine("clean SQLite vs TSQL edit distance info median=" + sql_median);
-			Console.WriteLine("Java vs Java8 edit distance info median=" + java_st_median);
-			Console.WriteLine("Java vs Java8 guava edit distance info median=" + java_guava_median);
+            Log.WriteLine("clean SQLite vs TSQL edit distance info median=" + sql_median);
+            Log.WriteLine("Java vs Java8 edit distance info median=" + java_st_median);
+            Log.WriteLine("Java vs Java8 guava edit distance info median=" + java_guava_median);
 		}
 	}
 

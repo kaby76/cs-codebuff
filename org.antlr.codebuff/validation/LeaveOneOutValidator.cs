@@ -124,9 +124,9 @@ namespace org.antlr.codebuff.validation
 				IList<InputDocument> documents = Tool.load(allFiles, language);
 				IList<InputDocument> parsableDocuments = BuffUtils.filter(documents, d => d.tree != null);
                 System.DateTime stop = System.DateTime.Now;
-				//Console.Write("Load/parse all docs from {0} time {1:D} ms\n", rootDir, (stop - start) / 1000000);
+                //Log.Write("Load/parse all docs from {0} time {1:D} ms\n", rootDir, (stop - start) / 1000000);
 
-				int ncpu = 1;
+                int ncpu = 1;
 				if (FORCE_SINGLE_THREADED)
 				{
 					ncpu = 2;
@@ -149,7 +149,7 @@ namespace org.antlr.codebuff.validation
 			            }
 			            catch (Exception t)
 			            {
-                            System.Console.WriteLine(t.StackTrace);
+                            Log.WriteLine(t.StackTrace);
 			            }
 			            return null;
 			        }
@@ -160,9 +160,9 @@ namespace org.antlr.codebuff.validation
 				DateTime final_stop = System.DateTime.Now;
 				double medianTrainingTime = BuffUtils.median(trainingTimes);
 				double medianFormattingPerMS = BuffUtils.median(formattingTokensPerMS);
-				Console.Write("Total time {0:D}ms\n", final_stop - start);
-				Console.Write("Median training time {0:D}ms\n", medianTrainingTime);
-				Console.Write("Median formatting time tokens per ms {0,5:F4}ms, min {1,5:F4} max {2,5:F4}\n", medianFormattingPerMS, BuffUtils.min(formattingTokensPerMS), BuffUtils.max(formattingTokensPerMS));
+                Log.Write("Total time {0:D}ms\n", final_stop - start);
+                Log.Write("Median training time {0:D}ms\n", medianTrainingTime);
+                Log.Write("Median formatting time tokens per ms {0,5:F4}ms, min {1,5:F4} max {2,5:F4}\n", medianFormattingPerMS, BuffUtils.min(formattingTokensPerMS), BuffUtils.max(formattingTokensPerMS));
 			}
 			return new Triple<IList<Formatter>, IList<float>, IList<float>>(formatters,distances,errors);
 		}
@@ -181,7 +181,7 @@ namespace org.antlr.codebuff.validation
 	//		kNNClassifier.resetCache();
 			if (excluded.Count == 0)
 			{
-				Console.Error.WriteLine("Doc not in corpus: " + path);
+                Log.WriteLine("Doc not in corpus: " + path);
 				return null;
 			}
 			InputDocument testDoc = excluded[0];
@@ -200,7 +200,7 @@ namespace org.antlr.codebuff.validation
 				editDistance = Dbg.normalizedLevenshteinDistance(testDoc.content, output);
 			}
 			ClassificationAnalysis analysis = new ClassificationAnalysis(originalDoc, formatter.AnalysisPerToken);
-			Console.WriteLine(testDoc.fileName + ": edit distance = " + editDistance + ", error rate = " + analysis.ErrorRate);
+            Log.WriteLine(testDoc.fileName + ": edit distance = " + editDistance + ", error rate = " + analysis.ErrorRate);
 			if (!string.ReferenceEquals(outputDir, null))
 			{
 				string dir = outputDir + "/" + language.name + "/" + Tool.version;
@@ -215,7 +215,7 @@ namespace org.antlr.codebuff.validation
 			trainingTimes.Add((double)tms.Milliseconds);
 			float tokensPerMS = testDoc.tokens.Size / (float) fms.TotalMilliseconds;
 			formattingTokensPerMS.Add((double)tokensPerMS);
-			Console.Write("Training time = {0:D} ms, formatting {1:D} ms, {2,5:F3} tokens/ms ({3:D} tokens)\n", tms, fms, tokensPerMS, testDoc.tokens.Size);
+            Log.Write("Training time = {0:D} ms, formatting {1:D} ms, {2,5:F3} tokens/ms ({3:D} tokens)\n", tms, fms, tokensPerMS, testDoc.tokens.Size);
 	//		System.out.printf("classify calls %d, hits %d rate %f\n",
 	//		                  kNNClassifier.nClassifyCalls, kNNClassifier.nClassifyCacheHits,
 	//		                  kNNClassifier.nClassifyCacheHits/(float) kNNClassifier.nClassifyCalls);
@@ -259,13 +259,6 @@ namespace org.antlr.codebuff.validation
 
 		public static void Main(string[] args)
 		{
-			LangDescriptor[] languages = new LangDescriptor[] { Tool.ANTLR4_DESCR };
-			IList<string> corpusDirs = BuffUtils.map(languages, l => l.corpusDir);
-			string[] dirs = corpusDirs.ToArray();
-			string python = testAllLanguages(languages, dirs, "leave_one_out.pdf");
-			string fileName = "python/src/leave_one_out.py";
-            org.antlr.codebuff.misc.Utils.writeFile(fileName, python);
-			Console.WriteLine("wrote python code to " + fileName);
 		}
 	}
 

@@ -388,7 +388,7 @@ namespace org.antlr.codebuff
 			TerminalNode node = tokenToNodeMap[doc.tokens.Get(tokenIndexInStream)];
 			if (node == null)
 			{
-				Console.Error.WriteLine("### No node associated with token " + doc.tokens.Get(tokenIndexInStream));
+                Log.WriteLine("### No node associated with token " + doc.tokens.Get(tokenIndexInStream));
 				return null;
 			}
 

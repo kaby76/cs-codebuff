@@ -34,7 +34,7 @@ namespace org.antlr.codebuff.validation
 				string output = formatter.format(testDoc, false);
 				//		System.out.println(output);
 				float editDistance = Dbg.normalizedLevenshteinDistance(testDoc.content, output);
-				Console.WriteLine(fileName + " edit distance " + editDistance);
+                Log.WriteLine(fileName + " edit distance " + editDistance);
 				selfEditDistances.Add(editDistance);
 			}
 
@@ -50,7 +50,7 @@ namespace org.antlr.codebuff.validation
 		            string output = formatter.format(testDoc, false);
 		            //		System.out.println(output);
 		            float editDistance = Dbg.normalizedLevenshteinDistance(testDoc.content, output);
-		            Console.WriteLine(fileName + "+corpus edit distance " + editDistance);
+                    Log.WriteLine(fileName + "+corpus edit distance " + editDistance);
 		            corpusEditDistances.Add(editDistance);
 		        }
 		        // heh this gives info on within-corpus variability. i.e., how good/consistent is my corpus?
@@ -92,7 +92,7 @@ namespace org.antlr.codebuff.validation
 		        {
 		            string fileName = "python/src/" + language.name + "_one_file_capture.py";
                     org.antlr.codebuff.misc.Utils.writeFile(fileName, code);
-		            Console.WriteLine("wrote python code to " + fileName);
+                    Log.WriteLine("wrote python code to " + fileName);
 		        }
 		    }
 		}

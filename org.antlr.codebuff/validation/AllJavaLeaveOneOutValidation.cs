@@ -19,7 +19,7 @@ namespace org.antlr.codebuff.validation
 			string python = LeaveOneOutValidator.testAllLanguages(languages, dirs, "all_java_leave_one_out.pdf");
 			string fileName = "python/src/all_java_leave_one_out.py";
             org.antlr.codebuff.misc.Utils.writeFile(fileName, python);
-			Console.WriteLine("wrote python code to " + fileName);
+            Log.WriteLine("wrote python code to " + fileName);
 		}
 	}
 

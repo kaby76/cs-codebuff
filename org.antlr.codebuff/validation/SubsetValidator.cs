@@ -60,7 +60,7 @@ namespace org.antlr.codebuff.validation
 			string[] dirs = corpusDirs.ToArray();
 			string fileName = "python/src/subset_validator.py";
             org.antlr.codebuff.misc.Utils.writeFile(fileName, pythonST.render());
-			Console.WriteLine("wrote python code to " + fileName);
+            Log.WriteLine("wrote python code to " + fileName);
 		}
 
 		public static float[] getMedianErrorRates(LangDescriptor language, int maxNumFiles, int trials)
@@ -98,7 +98,7 @@ namespace org.antlr.codebuff.validation
 					errorRates.Sort();
 					int n = errorRates.Count;
 					float median = errorRates[n / 2].Value;
-					Console.WriteLine("median " + language.name + " error rate for n=" + corpusSubsetSize + " is " + median);
+                    Log.WriteLine("median " + language.name + " error rate for n=" + corpusSubsetSize + " is " + median);
 					medians[corpusSubsetSize] = median;
 				}
 				catch (Exception t)

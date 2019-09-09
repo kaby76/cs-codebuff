@@ -120,12 +120,12 @@ namespace org.antlr.codebuff
 				foreach (RuleAltKey ruleAltKey in ruleToPairsBag.Keys)
 				{
 					IList<org.antlr.codebuff.misc.Pair<int, int>> pairs = ruleToPairsBag[ruleAltKey];
-					Console.Write(ruleAltKey + " -> ");
+					Log.Write(ruleAltKey + " -> ");
 					foreach (org.antlr.codebuff.misc.Pair<int, int> p in pairs)
 					{
-						Console.Write(vocab.GetDisplayName(p.a) + "," + vocab.GetDisplayName(p.b) + " ");
+                        Log.Write(vocab.GetDisplayName(p.a) + "," + vocab.GetDisplayName(p.b) + " ");
 					}
-					Console.WriteLine();
+                    Log.WriteLine();
 				}
 			}
 
@@ -137,7 +137,7 @@ namespace org.antlr.codebuff
 					parent = parent.Replace("Context","");
 					string siblingListName = ruleNames[siblingPairs.childRuleIndex];
 					siblingListName = siblingListName.Replace("Context","");
-					Console.WriteLine(parent + ":" + siblingPairs.parentRuleAlt + "->" + siblingListName + ":" + siblingPairs.childRuleAlt + " (n,min,median,var,max)=" + rootAndChildListStats[siblingPairs]);
+                    Log.WriteLine(parent + ":" + siblingPairs.parentRuleAlt + "->" + siblingListName + ":" + siblingPairs.childRuleAlt + " (n,min,median,var,max)=" + rootAndChildListStats[siblingPairs]);
 				}
 				IDictionary<ParentSiblingListKey, int> splitListForms = collectSiblingLists.SplitListForms;
 				foreach (ParentSiblingListKey siblingPairs in rootAndSplitChildListStats.Keys)
@@ -146,13 +146,11 @@ namespace org.antlr.codebuff
 					parent = parent.Replace("Context","");
 					string siblingListName = ruleNames[siblingPairs.childRuleIndex];
 					siblingListName = siblingListName.Replace("Context","");
-					Console.WriteLine("SPLIT " + parent + ":" + siblingPairs.parentRuleAlt + "->" + siblingListName + ":" + siblingPairs.childRuleAlt + " (n,min,median,var,max)=" + rootAndSplitChildListStats[siblingPairs] + " form " + splitListForms[siblingPairs]);
+                    Log.WriteLine("SPLIT " + parent + ":" + siblingPairs.parentRuleAlt + "->" + siblingListName + ":" + siblingPairs.childRuleAlt + " (n,min,median,var,max)=" + rootAndSplitChildListStats[siblingPairs] + " form " + splitListForms[siblingPairs]);
 				}
 			}
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public void trainOnSampleDocs() throws Exception
 		public virtual void trainOnSampleDocs()
 		{
 			documentsPerExemplar = new List<InputDocument>();
@@ -164,7 +162,7 @@ namespace org.antlr.codebuff
 			{
 				if (Tool.showFileNames)
 				{
-					Console.WriteLine(doc);
+                    Log.WriteLine(doc.ToString());
 				}
 				// Parse document, add feature vectors to this corpus
 				Trainer trainer = new Trainer(this, doc, language.indentSize);

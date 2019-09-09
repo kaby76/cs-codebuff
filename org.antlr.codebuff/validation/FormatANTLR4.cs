@@ -11,10 +11,6 @@ namespace org.antlr.codebuff.validation
 	{
 		public static void Main(string[] args)
 		{
-			LeaveOneOutValidator validator = new LeaveOneOutValidator(Tool.ANTLR4_DESCR.corpusDir, Tool.ANTLR4_DESCR);
-			Triple<IList<Formatter>, IList<float>, IList<float>> results = validator.validateDocuments(false, "output");
-			Console.WriteLine(results.b);
-			Console.WriteLine(results.c);
 		}
 	}
 

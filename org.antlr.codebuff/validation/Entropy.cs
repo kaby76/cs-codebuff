@@ -86,7 +86,6 @@ namespace org.antlr.codebuff.validation
 
 		public static void Main(string[] args)
 		{
-			runCaptureForOneLanguage(Tool.ANTLR4_DESCR);
 		}
 
 		public static void runCaptureForOneLanguage(LangDescriptor language)
@@ -98,7 +97,7 @@ namespace org.antlr.codebuff.validation
 				// Examine info for this file in isolation
 				Corpus fileCorpus = new Corpus(fileName, language);
 				fileCorpus.train();
-				Console.WriteLine(fileName);
+                Log.WriteLine(fileName);
 	//			examineCorpus(corpus);
 				ArrayListMultiMap<FeatureVectorAsObject, int> ws = getWSContextCategoryMap(fileCorpus);
                 ArrayListMultiMap<FeatureVectorAsObject, int> hpos = getHPosContextCategoryMap(fileCorpus);
@@ -121,7 +120,7 @@ namespace org.antlr.codebuff.validation
 					// compare file predictions with corpus predictions
 					if (!fwsRatios.SequenceEqual(wsRatios))
 					{
-						Console.WriteLine(fwsRatios + " vs " + wsRatios);
+                        Log.WriteLine(fwsRatios + " vs " + wsRatios);
 					}
 
 					HashBag<int> fhposCats = getCategoriesBag(hpos[x]);
@@ -185,12 +184,12 @@ namespace org.antlr.codebuff.validation
 				double hposEntropy = getNormalizedCategoryEntropy(getCategoryRatios(hposCats.Values));
 				wsEntropies.Add(wsEntropy);
 				hposEntropies.Add(hposEntropy);
-				Console.Write("{0,130} : {1},{2} {3},{4}\n", x, wsCats, wsEntropy, hposCats, hposEntropy);
+                Log.Write("{0,130} : {1},{2} {3},{4}\n", x, wsCats, wsEntropy, hposCats, hposEntropy);
 			}
-			Console.WriteLine("MEAN " + BuffUtils.mean(wsEntropies));
-			Console.WriteLine("MEAN " + BuffUtils.mean(hposEntropies));
+            Log.WriteLine("MEAN " + BuffUtils.mean(wsEntropies));
+            Log.WriteLine("MEAN " + BuffUtils.mean(hposEntropies));
 			float contextRichness = wsEntropies.Count / (float) numContexts; // 0..1 where 1 means every token had different context
-			Console.WriteLine("Context richness = " + contextRichness + " uniq ctxs=" + wsEntropies.Count + ", nctxs=" + numContexts);
+            Log.WriteLine("Context richness = " + contextRichness + " uniq ctxs=" + wsEntropies.Count + ", nctxs=" + numContexts);
 		}
 
 		/// <summary>

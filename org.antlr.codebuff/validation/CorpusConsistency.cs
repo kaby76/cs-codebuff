@@ -29,9 +29,9 @@ namespace org.antlr.codebuff.validation
 		{
 			if (report)
 			{
-				Console.WriteLine("-----------------------------------");
-				Console.WriteLine(language.name);
-				Console.WriteLine("-----------------------------------");
+                Log.WriteLine("-----------------------------------");
+                Log.WriteLine(language.name);
+                Log.WriteLine("-----------------------------------");
 			}
 			Corpus corpus = new Corpus(language.corpusDir, language);
 			corpus.train();
@@ -53,7 +53,7 @@ namespace org.antlr.codebuff.validation
 			// Dump output grouped by ws vs hpos then feature vector then category
 			if (report)
 			{
-				Console.WriteLine(" --- INJECT WS ---");
+                Log.WriteLine(" --- INJECT WS ---");
 			}
 			IList<double> ws_entropies = new List<double>();
 			foreach (FeatureVectorAsObject fo in wsContextToIndex.Keys)
@@ -72,20 +72,20 @@ namespace org.antlr.codebuff.validation
 				}
 				if (report)
 				{
-					Console.WriteLine("Feature vector has " + exemplarIndexes.size() + " exemplars");
+                    Log.WriteLine("Feature vector has " + exemplarIndexes.size() + " exemplars");
 				}
 				IList<int> catCounts = BuffUtils.map(wsCatToIndexes.Values, (x)=> x.size());
 				double wsEntropy = Entropy.getNormalizedCategoryEntropy(Entropy.getCategoryRatios(catCounts));
 				if (report)
 				{
-					Console.Write("entropy={0,5:F4}\n", wsEntropy);
+                    Log.Write("entropy={0,5:F4}\n", wsEntropy);
 				}
 				wsEntropy *= exemplarIndexes.size();
 				ws_entropies.Add(wsEntropy);
 				num_ambiguous_ws_vectors += exemplarIndexes.size();
 				if (report)
 				{
-					Console.Write(Trainer.featureNameHeader(Trainer.FEATURES_INJECT_WS));
+                    Log.Write(Trainer.featureNameHeader(Trainer.FEATURES_INJECT_WS));
 				}
 
 				if (report)
@@ -96,16 +96,16 @@ namespace org.antlr.codebuff.validation
 						foreach (int i in indexes)
 						{
 							string display = getExemplarDisplay(Trainer.FEATURES_INJECT_WS, corpus, corpus.injectWhitespace, i);
-							Console.WriteLine(display);
+                            Log.WriteLine(display);
 						}
-						Console.WriteLine();
+                        Log.WriteLine();
 					}
 				}
 			}
 
 			if (report)
 			{
-				Console.WriteLine(" --- HPOS ---");
+                Log.WriteLine(" --- HPOS ---");
 			}
 			IList<double> hpos_entropies = new List<double>();
 			foreach (FeatureVectorAsObject fo in hposContextToIndex.Keys)
@@ -124,20 +124,20 @@ namespace org.antlr.codebuff.validation
 				}
 				if (report)
 				{
-					Console.WriteLine("Feature vector has " + exemplarIndexes.size() + " exemplars");
+                    Log.WriteLine("Feature vector has " + exemplarIndexes.size() + " exemplars");
 				}
 				IList<int> catCounts = BuffUtils.map(hposCatToIndexes.Values, (x) => x.size());
 				double hposEntropy = Entropy.getNormalizedCategoryEntropy(Entropy.getCategoryRatios(catCounts));
 				if (report)
 				{
-					Console.Write("entropy={0,5:F4}\n", hposEntropy);
+                    Log.Write("entropy={0,5:F4}\n", hposEntropy);
 				}
 				hposEntropy *= exemplarIndexes.size();
 				hpos_entropies.Add(hposEntropy);
 				num_ambiguous_hpos_vectors += exemplarIndexes.size();
 				if (report)
 				{
-					Console.Write(Trainer.featureNameHeader(Trainer.FEATURES_HPOS));
+                    Log.Write(Trainer.featureNameHeader(Trainer.FEATURES_HPOS));
 				}
 
 				if (report)
@@ -148,29 +148,29 @@ namespace org.antlr.codebuff.validation
 						foreach (int? i in indexes)
 						{
 							string display = getExemplarDisplay(Trainer.FEATURES_HPOS, corpus, corpus.hpos, i.Value);
-							Console.WriteLine(display);
+                            Log.WriteLine(display);
 						}
-						Console.WriteLine();
+                        Log.WriteLine();
 					}
 				}
 			}
-			Console.WriteLine();
-			Console.WriteLine(language.name);
-			Console.WriteLine("There are " + wsContextToIndex.Count + " unique ws feature vectors out of " + n + " = " + string.Format("{0,3:F1}%",100.0 * wsContextToIndex.Count / n));
-			Console.WriteLine("There are " + hposContextToIndex.Count + " unique hpos feature vectors out of " + n + " = " + string.Format("{0,3:F1}%",100.0 * hposContextToIndex.Count / n));
+            Log.WriteLine();
+            Log.WriteLine(language.name);
+            Log.WriteLine("There are " + wsContextToIndex.Count + " unique ws feature vectors out of " + n + " = " + string.Format("{0,3:F1}%",100.0 * wsContextToIndex.Count / n));
+            Log.WriteLine("There are " + hposContextToIndex.Count + " unique hpos feature vectors out of " + n + " = " + string.Format("{0,3:F1}%",100.0 * hposContextToIndex.Count / n));
 			float prob_ws_ambiguous = num_ambiguous_ws_vectors / (float) n;
-			Console.Write("num_ambiguous_ws_vectors   = {0,5:D}/{1,5:D} = {2,5:F3}\n", num_ambiguous_ws_vectors, n, prob_ws_ambiguous);
+            Log.Write("num_ambiguous_ws_vectors   = {0,5:D}/{1,5:D} = {2,5:F3}\n", num_ambiguous_ws_vectors, n, prob_ws_ambiguous);
 			float prob_hpos_ambiguous = num_ambiguous_hpos_vectors / (float) n;
-			Console.Write("num_ambiguous_hpos_vectors = {0,5:D}/{1,5:D} = {2,5:F3}\n", num_ambiguous_hpos_vectors, n, prob_hpos_ambiguous);
-	//		Collections.sort(ws_entropies);
-	//		System.out.println("ws_entropies="+ws_entropies);
-			Console.WriteLine("ws median,mean = " + BuffUtils.median(ws_entropies) + "," + BuffUtils.mean(ws_entropies));
+            Log.Write("num_ambiguous_hpos_vectors = {0,5:D}/{1,5:D} = {2,5:F3}\n", num_ambiguous_hpos_vectors, n, prob_hpos_ambiguous);
+            //		Collections.sort(ws_entropies);
+            //		System.out.println("ws_entropies="+ws_entropies);
+            Log.WriteLine("ws median,mean = " + BuffUtils.median(ws_entropies) + "," + BuffUtils.mean(ws_entropies));
 			double expected_ws_entropy = (BuffUtils.sumDoubles(ws_entropies) / num_ambiguous_ws_vectors) * prob_ws_ambiguous;
-			Console.WriteLine("expected_ws_entropy=" + expected_ws_entropy);
+            Log.WriteLine("expected_ws_entropy=" + expected_ws_entropy);
 
-			Console.WriteLine("hpos median,mean = " + BuffUtils.median(hpos_entropies) + "," + BuffUtils.mean(hpos_entropies));
+            Log.WriteLine("hpos median,mean = " + BuffUtils.median(hpos_entropies) + "," + BuffUtils.mean(hpos_entropies));
 			double expected_hpos_entropy = (BuffUtils.sumDoubles(hpos_entropies) / num_ambiguous_hpos_vectors) * prob_hpos_ambiguous;
-			Console.WriteLine("expected_hpos_entropy=" + expected_hpos_entropy);
+            Log.WriteLine("expected_hpos_entropy=" + expected_hpos_entropy);
 		}
 
 		public static string getExemplarDisplay(FeatureMetaData[] FEATURES, Corpus corpus, IList<int> Y, int corpusVectorIndex)

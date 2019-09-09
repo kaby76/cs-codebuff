@@ -4,11 +4,20 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>org.antlr.codebuff</RootNamespace>
     <AssemblyName>org.antlr.codebuff</AssemblyName>
+    <PackageId>cs-codebuff</PackageId>
+    <Version>2.0.3</Version>
+    <Authors>Ken Domino</Authors>
+    <Product />
+    <Description>A C# port of Codebuff, a machine-learning tool for code formatting.</Description>
+    <Copyright>Copyright © 2017 - 2019</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/kaby76/cs-codebuff</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kaby76/cs-codebuff</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>Codebuff</PackageTags>
+    <PackageReleaseNotes>For further information, see https://github.com/kaby76/cs-codebuff.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Antlr4 Remove="grammar\LexUnicode.g4" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="ProfileJava.cs" />
@@ -33,8 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Antlr4 Remove="grammar\LexBasic.g4" />
-    <Antlr4 Remove="grammar\LexUnicode.g4" />
     <None Include="ProfileJava.cs" />
     <None Include="validation\AllJavaLeaveOneOutValidation.cs" />
     <None Include="validation\ANTLROneFileCapture.cs" />
@@ -60,7 +67,7 @@
     <PackageReference Include="Antlr4.Runtime.Standard">
       <Version>4.7.2</Version>
     </PackageReference>
-    <PackageReference Include="Antlr4BuildTasks" Version="1.0.5" />
+    <PackageReference Include="Antlr4BuildTasks" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>

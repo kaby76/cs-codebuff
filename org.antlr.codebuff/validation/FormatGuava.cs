@@ -17,8 +17,8 @@ namespace org.antlr.codebuff.validation
 		{
 			LeaveOneOutValidator validator = new LeaveOneOutValidator(JAVA_GUAVA_DESCR.corpusDir, JAVA_GUAVA_DESCR);
 			Triple<IList<Formatter>, IList<float?>, IList<float?>> results = validator.validateDocuments(false, "output");
-			Console.WriteLine(results.b);
-			Console.WriteLine(results.c);
+            Log.WriteLine(results.b);
+            Log.WriteLine(results.c);
 		}
 
 	}

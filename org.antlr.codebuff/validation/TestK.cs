@@ -51,7 +51,7 @@ namespace org.antlr.codebuff.validation
 //JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
 //ORIGINAL LINE: final int langIndex = i;
 				int langIndex = i;
-				Console.WriteLine(language.name);
+                Log.WriteLine(language.name);
 				foreach (int k in ks)
 				{
 					medians[langIndex] = new float?[OUTLIER_K + 1];
@@ -102,7 +102,7 @@ namespace org.antlr.codebuff.validation
 
 			string fileName = "python/src/vary_k.py";
             org.antlr.codebuff.misc.Utils.writeFile(fileName, code);
-			Console.WriteLine("wrote python code to " + fileName);
+            Log.WriteLine("wrote python code to " + fileName);
 		}
 
 		/// <summary>
