@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Antlr4.Runtime;
@@ -83,6 +84,7 @@ namespace org.antlr.codebuff
 
         public static string Main(object[] args)
 		{
+            Log.Reset();
             try
             {
                 if (args.Length < 7)
@@ -188,7 +190,15 @@ namespace org.antlr.codebuff
                 string fileRegex = null;
                 if (!string.ReferenceEquals(fileExtension, null))
                 {
-                    fileRegex = ".*\\." + fileExtension;
+                    var pattern = "";
+                    var allowable_suffices = fileExtension.Split(';').ToList<string>();
+                    foreach (var s in allowable_suffices)
+                    {
+                        var no_dot = s.Substring(s.IndexOf('.') + 1);
+                        pattern = pattern == "" ? ("(" + no_dot) : (pattern + "|" + no_dot);
+                    }
+                    pattern = pattern + ")";
+                    fileRegex = ".*\\." + pattern;
                 }
                 LangDescriptor language = new LangDescriptor(grammarName, corpusDir, fileRegex, lexerClass, parserClass, startRule, indentSize, singleLineCommentType);
 

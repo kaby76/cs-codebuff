@@ -19,6 +19,11 @@ namespace org.antlr.codebuff
     {
         static StringBuilder _sb = new StringBuilder();
 
+        public static void Reset()
+        {
+            _sb = new StringBuilder();
+        }
+
         public static void WriteLine(string s = "")
         {
             _sb.AppendLine(s);

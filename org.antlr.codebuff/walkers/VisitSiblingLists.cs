@@ -49,33 +49,35 @@ namespace org.antlr.codebuff.walkers
 			Token prefixToken = tokens.getPreviousRealToken(first.Start.TokenIndex); // e.g., '(' in an arg list or ':' in grammar def
 			Token suffixToken = tokens.getNextRealToken(last.Stop.TokenIndex); // e.g., LT(1) is last token of list; LT(2) is ')' in an arg list of ';' in grammar def
 
-			TerminalNode prefixNode = tokenToNodeMap[prefixToken];
-			TerminalNode suffixNode = tokenToNodeMap[suffixToken];
-			bool hasSurroundingTokens = prefixNode != null && prefixNode.Parent == suffixNode.Parent;
+            if (prefixToken != null && suffixToken != null)
+            {
+                TerminalNode prefixNode = tokenToNodeMap[prefixToken];
+                TerminalNode suffixNode = tokenToNodeMap[suffixToken];
+                bool hasSurroundingTokens = prefixNode != null && prefixNode.Parent == suffixNode.Parent;
 
-			if (hasSurroundingTokens)
-			{
-				tokenToListInfo[prefixToken] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_PREFIX);
-				tokenToListInfo[suffixToken] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_SUFFIX);
-			}
+                if (hasSurroundingTokens)
+                {
+                    tokenToListInfo[prefixToken] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_PREFIX);
+                    tokenToListInfo[suffixToken] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_SUFFIX);
+                }
 
-			IList<Tree> separators = getSeparators(ctx, siblings);
-			Tree firstSep = separators[0];
-			tokenToListInfo[(Token)firstSep.Payload] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_FIRST_SEPARATOR);
-			foreach (Tree s in separators.Where((e, i) => i > 0 && i < separators.Count))
-			{
-				tokenToListInfo[(Token)s.Payload] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_SEPARATOR);
-			}
+                IList<Tree> separators = getSeparators(ctx, siblings);
+                Tree firstSep = separators[0];
+                tokenToListInfo[(Token)firstSep.Payload] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_FIRST_SEPARATOR);
+                foreach (Tree s in separators.Where((e, i) => i > 0 && i < separators.Count))
+                {
+                    tokenToListInfo[(Token)s.Payload] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_SEPARATOR);
+                }
 
-			// handle sibling members
-			tokenToListInfo[first.Start] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_FIRST_ELEMENT);
-			foreach (T1 ss in siblings.Where((e, i) => i > 0 && i < siblings.Count))
-			{
-			    var s = ss as ParserRuleContext;
-				tokenToListInfo[s.Start] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_MEMBER);
-			}
-
-			return tokenToListInfo;
+                // handle sibling members
+                tokenToListInfo[first.Start] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_FIRST_ELEMENT);
+                foreach (T1 ss in siblings.Where((e, i) => i > 0 && i < siblings.Count))
+                {
+                    var s = ss as ParserRuleContext;
+                    tokenToListInfo[s.Start] = new org.antlr.codebuff.misc.Pair<bool, int>(isOversizeList, Trainer.LIST_MEMBER);
+                }
+            }
+            return tokenToListInfo;
 		}
 
 	    public virtual void VisitTerminal(ITerminalNode node)

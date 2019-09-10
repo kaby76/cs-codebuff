@@ -573,8 +573,10 @@ namespace org.antlr.codebuff
 		public static bool cannotJoin(Token prevToken, Token curToken)
 		{
 			string prevTokenText = prevToken.Text;
+            if (prevTokenText.Length == 0) return true;
 			char prevLastChar = prevTokenText[prevTokenText.Length - 1];
 			string curTokenText = curToken.Text;
+            if (curTokenText.Length == 0) return true;
 			char curFirstChar = curTokenText[0];
 			return char.IsLetterOrDigit(prevLastChar) && char.IsLetterOrDigit(curFirstChar);
 		}
