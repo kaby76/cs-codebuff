@@ -251,7 +251,8 @@ namespace org.antlr.codebuff
             {
                 throw e;
             }
-            return Log.Message();
+
+            return formatted_output;
         }
 
         public static void setToolVersion()
