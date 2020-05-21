@@ -58,6 +58,8 @@ namespace org.antlr.codebuff.misc
 		public virtual Token getPreviousRealToken(int i)
 		{
 			i--; // previousTokenOnChannel is inclusive
+			if (i < 0)
+				return null;
 			int pi = PreviousTokenOnChannel(i, TokenConstants.DefaultChannel);
 			if (pi >= 0 && pi < this.Size)
 			{

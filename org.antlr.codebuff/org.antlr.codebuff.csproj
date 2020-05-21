@@ -5,7 +5,7 @@
     <RootNamespace>org.antlr.codebuff</RootNamespace>
     <AssemblyName>org.antlr.codebuff</AssemblyName>
     <PackageId>cs-codebuff</PackageId>
-    <Version>2.0.5</Version>
+    <Version>2.0.6</Version>
     <Authors>Ken Domino</Authors>
     <Product />
     <Description>A C# port of Codebuff, a machine-learning tool for code formatting.</Description>
