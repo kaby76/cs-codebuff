@@ -1,6 +1,6 @@
 # CS-Codebuff
 
-This project is a port of [Codebuff](https://github.com/antlr/codebuff) to C#, generated from Telerik's excellent Code Converter, and then hand-tuned
+This project is a port of [Codebuff](https://github.com/antlr/codebuff) to C#, generated from Tangible Software Solutions' excellent Code Converter, and then hand-tuned
 to resolve certain problems not caught by Code Converter.
 
 Codebuff is a formatting tool that uses a novel approach via a machine learning algorithm 
