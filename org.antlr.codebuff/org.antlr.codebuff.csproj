@@ -5,7 +5,7 @@
     <RootNamespace>org.antlr.codebuff</RootNamespace>
     <AssemblyName>org.antlr.codebuff</AssemblyName>
     <PackageId>cs-codebuff</PackageId>
-    <Version>2.0.6</Version>
+    <Version>3.1.0</Version>
     <Authors>Ken Domino</Authors>
     <Product />
     <Description>A C# port of Codebuff, a machine-learning tool for code formatting.</Description>
@@ -64,10 +64,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Antlr4.Runtime.Standard">
-      <Version>4.7.2</Version>
-    </PackageReference>
-    <PackageReference Include="Antlr4BuildTasks" Version="1.0.7" />
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8" />
+    <PackageReference Include="Antlr4BuildTasks" Version="8.0" />
   </ItemGroup>
 
   <ItemGroup>
