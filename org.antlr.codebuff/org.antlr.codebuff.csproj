@@ -5,11 +5,11 @@
     <RootNamespace>org.antlr.codebuff</RootNamespace>
     <AssemblyName>org.antlr.codebuff</AssemblyName>
     <PackageId>cs-codebuff</PackageId>
-    <Version>3.1.0</Version>
+    <Version>4.0.0</Version>
     <Authors>Ken Domino</Authors>
     <Product />
     <Description>A C# port of Codebuff, a machine-learning tool for code formatting.</Description>
-    <Copyright>Copyright © 2017 - 2020</Copyright>
+    <Copyright>Copyright © 2017 - 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/kaby76/cs-codebuff</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kaby76/cs-codebuff</RepositoryUrl>
@@ -64,8 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8" />
-    <PackageReference Include="Antlr4BuildTasks" Version="8.0" />
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.9.2" />
   </ItemGroup>
 
   <ItemGroup>
